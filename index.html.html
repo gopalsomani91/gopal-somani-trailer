@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gopal Somani</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Plus+Jakarta+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --black:#1E1E1A;--cream:#F5F0E8;--cream2:#EDE7D9;
+  --green:#2D6A4F;--green-light:#40916C;--green-pale:#D8F3DC;
+  --mute:#6B6760;--line:rgba(20,20,18,0.1);--line-inv:rgba(245,240,232,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;}
+.stage{width:100%;max-width:980px;margin:0 auto;background:var(--cream);}
+
+[data-reveal]{opacity:0;}
+[data-reveal="up"]{transform:translateY(28px);}
+[data-reveal="left"]{transform:translateX(-20px);}
+[data-reveal="scale"]{transform:scale(0.92);}
+.in-view[data-reveal="up"]{animation:revUp 0.9s cubic-bezier(.16,1,.3,1) forwards;animation-delay:var(--d,0s);}
+.in-view[data-reveal="fade"]{animation:revFade 0.9s ease forwards;animation-delay:var(--d,0s);}
+.in-view[data-reveal="scale"]{animation:revScale 0.7s cubic-bezier(.2,1.2,.4,1) forwards;animation-delay:var(--d,0s);}
+@keyframes revUp{to{opacity:1;transform:translateY(0);}}
+@keyframes revFade{to{opacity:1;}}
+@keyframes revScale{to{opacity:1;transform:scale(1);}}
+
+.rail{position:fixed;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100;}
+.rail-dot{width:7px;height:7px;border-radius:50%;background:rgba(20,20,18,0.2);border:1px solid rgba(20,20,18,0.2);cursor:pointer;transition:all 0.3s;}
+.rail-dot.on{background:var(--green);border-color:var(--green);transform:scale(1.5);}
+
+.scene{position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 64px;overflow:hidden;}
+
+/* S1 */
+.s1{background:#1E1E1A;}
+.s1-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--green-light);margin-bottom:52px;}
+.conviction{font-family:'Playfair Display',serif;font-size:clamp(30px,5.4vw,58px);font-weight:700;color:var(--cream);line-height:1.2;max-width:740px;word-spacing:0.05em;}
+.conviction .word{display:inline;opacity:0;animation:wordIn 0.6s cubic-bezier(.16,1,.3,1) forwards;}
+@keyframes wordIn{to{opacity:1;}}
+.conviction .hl{color:var(--green-light);font-style:italic;}
+.s1-rule{width:48px;height:2px;background:var(--green);margin-top:48px;transform:scaleX(0);transform-origin:left;animation:ruleIn 0.7s ease forwards;animation-delay:2.8s;}
+@keyframes ruleIn{to{transform:scaleX(1);}}
+.s1-sub{font-size:17px;line-height:1.7;color:rgba(245,240,232,0.6);max-width:520px;margin-top:24px;opacity:0;animation:revFade 1s ease forwards;animation-delay:3.1s;}
+
+/* S2 */
+.s2{background:var(--cream);}
+.s2-name{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,68px);font-weight:800;color:var(--black);line-height:1.05;letter-spacing:-0.01em;}
+.s2-descriptor{font-size:clamp(15px,1.9vw,19px);color:var(--mute);line-height:1.65;max-width:580px;margin-top:20px;}
+.s2-descriptor strong{color:var(--black);font-weight:600;}
+.s2-anchors{display:flex;gap:0;margin-top:52px;border-top:1px solid var(--line);max-width:680px;}
+.s2-anchor{flex:1;padding:22px 0 22px 24px;border-right:1px solid var(--line);}
+.s2-anchor:first-child{padding-left:0;}
+.s2-anchor:last-child{border-right:none;}
+.s2-anchor .an-num{font-family:'Playfair Display',serif;font-size:clamp(24px,3.8vw,38px);font-weight:700;color:var(--green);line-height:1;}
+.s2-anchor .an-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mute);margin-top:8px;line-height:1.5;}
+
+/* S3 */
+.s3{background:#1E1E1A;}
+.s3-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--green-light);margin-bottom:16px;}
+.s3-head{font-family:'Playfair Display',serif;font-size:clamp(26px,4.2vw,46px);font-weight:700;color:var(--cream);line-height:1.22;max-width:640px;}
+.craft-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(245,240,232,0.08);margin-top:52px;max-width:720px;border:1px solid rgba(245,240,232,0.08);}
+.craft-cell{background:#1E1E1A;padding:28px 30px;transition:background 0.3s;}
+.craft-cell:hover{background:#262620;}
+.craft-cell .cc-verb{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(17px,2.2vw,23px);font-weight:700;color:var(--green-light);margin-bottom:10px;line-height:1.2;}
+.craft-cell .cc-body{font-size:14px;color:rgba(245,240,232,0.6);line-height:1.65;}
+.process-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:36px;max-width:720px;}
+.ptag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.06em;padding:6px 14px;border:1px solid var(--green);color:var(--green-light);border-radius:2px;transition:background 0.2s,color 0.2s;}
+.ptag:hover{background:var(--green);color:var(--cream);}
+
+/* S4 */
+.s4{background:var(--cream2);}
+.s4-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--green);margin-bottom:16px;}
+.s4-head{font-family:'Playfair Display',serif;font-size:clamp(26px,4.2vw,46px);font-weight:700;color:var(--black);line-height:1.22;max-width:560px;}
+.proof-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:2px solid var(--black);max-width:780px;}
+.proof-cell{padding:28px 24px 28px 4px;border-right:1px solid var(--line);transition:transform 0.3s;}
+.proof-cell:first-child{padding-left:0;}
+.proof-cell:last-child{border-right:none;}
+.proof-cell:hover{transform:translateY(-4px);}
+.proof-cell .pc-num{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,42px);font-weight:800;color:var(--black);line-height:1;}
+.proof-cell .pc-unit{font-size:0.55em;font-weight:700;color:var(--green);vertical-align:middle;}
+.proof-cell .pc-label{font-size:13px;color:var(--mute);margin-top:10px;line-height:1.5;}
+.s4-narrative{margin-top:40px;max-width:660px;font-size:17px;color:var(--mute);line-height:1.75;border-left:3px solid var(--green);padding-left:22px;font-style:italic;}
+.s4-narrative strong{color:var(--black);font-style:normal;}
+
+/* S5 */
+.s5{background:#25503C;}
+.s5-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:rgba(245,240,232,0.6);margin-bottom:16px;}
+.s5-head{font-family:'Playfair Display',serif;font-size:clamp(26px,4.4vw,50px);font-weight:700;color:var(--cream);line-height:1.22;max-width:680px;}
+.pov-list{margin-top:48px;max-width:680px;display:flex;flex-direction:column;}
+.pov-item{display:flex;gap:20px;padding:22px 0;border-bottom:1px solid rgba(245,240,232,0.15);transition:padding-left 0.3s;}
+.pov-item:first-child{border-top:1px solid rgba(245,240,232,0.15);}
+.pov-item:hover{padding-left:10px;}
+.pov-item .pi-mark{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;font-weight:700;color:rgba(245,240,232,0.25);min-width:32px;transition:color 0.3s;padding-top:2px;}
+.pov-item:hover .pi-mark{color:rgba(245,240,232,0.6);}
+.pov-item .pi-text{font-size:clamp(14px,1.8vw,17px);color:rgba(245,240,232,0.8);line-height:1.68;}
+.pov-item .pi-text strong{color:var(--cream);font-weight:600;display:block;margin-bottom:6px;font-size:clamp(15px,2vw,18px);}
+
+/* S6 */
+.s6{background:var(--cream);}
+.s6-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--green);margin-bottom:16px;}
+.s6-head{font-family:'Playfair Display',serif;font-size:clamp(26px,4.2vw,46px);font-weight:700;color:var(--black);line-height:1.22;max-width:560px;}
+.timeline{margin-top:52px;max-width:740px;position:relative;}
+.timeline::before{content:'';position:absolute;left:88px;top:0;bottom:0;width:1px;background:var(--line);}
+.tl-item{display:grid;grid-template-columns:88px 1fr;gap:0 28px;padding:0 0 36px 0;position:relative;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-year{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.1em;color:var(--mute);padding-top:4px;text-align:right;}
+.tl-dot{position:absolute;left:84px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--cream);border:2px solid var(--green);transition:background 0.3s,transform 0.3s;}
+.tl-item:hover .tl-dot{background:var(--green);transform:scale(1.4);}
+.tl-role{font-size:clamp(14px,1.8vw,16px);font-weight:600;color:var(--black);line-height:1.3;margin-bottom:4px;}
+.tl-org{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+.tl-desc{font-size:13px;color:var(--mute);line-height:1.6;}
+
+/* S7 */
+.s7{background:var(--black);min-height:90vh;}
+.s7-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--green-light);margin-bottom:20px;}
+.s7-sign{font-family:'Playfair Display',serif;font-size:clamp(40px,6.5vw,76px);font-weight:800;color:var(--cream);line-height:1.05;letter-spacing:-0.01em;}
+.s7-closing{margin-top:28px;max-width:560px;font-size:clamp(15px,1.9vw,18px);color:rgba(245,240,232,0.65);line-height:1.8;}
+.s7-closing em{color:var(--green-light);font-style:italic;}
+.s7-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px;}
+.s7-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;padding:8px 16px;border:1px solid rgba(245,240,232,0.15);color:rgba(245,240,232,0.5);border-radius:2px;}
+.s7-rule{width:100%;max-width:560px;height:1px;background:var(--line-inv);margin:44px 0;}
+.nus-line{font-size:14px;color:rgba(245,240,232,0.45);margin-bottom:32px;}
+.nus-line span{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-light);margin-right:10px;}
+.s7-links{display:flex;gap:14px;flex-wrap:wrap;}
+.s7-btn{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;padding:14px 28px;border-radius:2px;text-decoration:none;display:inline-block;transition:transform 0.2s,background 0.2s,color 0.2s;}
+.s7-btn:hover{transform:translateY(-2px);}
+.s7-btn.primary{background:var(--green);color:var(--cream);}
+.s7-btn.primary:hover{background:var(--green-light);}
+.s7-btn.ghost{border:1px solid rgba(245,240,232,0.25);color:rgba(245,240,232,0.7);}
+.s7-btn.ghost:hover{border-color:var(--cream);color:var(--cream);}
+
+@media(max-width:640px){
+  .scene{padding:56px 28px;}
+  .craft-grid{grid-template-columns:1fr;}
+  .proof-row{grid-template-columns:1fr 1fr;}
+  .proof-cell:nth-child(2){border-right:none;}
+  .s2-anchors{flex-direction:column;}
+  .s2-anchor{border-right:none;border-bottom:1px solid var(--line);padding-left:0;}
+  .rail{right:8px;}
+  .timeline::before{left:64px;}
+  .tl-item{grid-template-columns:64px 1fr;}
+  .tl-dot{left:60px;}
+}
+</style>
+</head>
+<body>
+
+<div class="rail" id="rail">
+  <div class="rail-dot" data-i="0"></div>
+  <div class="rail-dot" data-i="1"></div>
+  <div class="rail-dot" data-i="2"></div>
+  <div class="rail-dot" data-i="3"></div>
+  <div class="rail-dot" data-i="4"></div>
+  <div class="rail-dot" data-i="5"></div>
+  <div class="rail-dot" data-i="6"></div>
+</div>
+
+<div class="stage">
+
+<!-- S1 CONVICTION -->
+<section class="scene s1" id="s1">
+  <div class="s1-eyebrow" data-reveal="fade" style="--d:0.15s">Finance &middot; Technology &middot; Transformation</div>
+  <div class="conviction" id="conviction" aria-label="Most finance transformations stall — not because of the technology, but because nobody in the room speaks both finance and systems fluently."></div>
+  <div class="s1-rule"></div>
+  <p class="s1-sub">That gap is where Gopal Somani works. A Chartered Accountant who became an Oracle Fusion Cloud architect. A systems builder who advises CFOs. The person in the room who speaks both.</p>
+</section>
+
+<!-- S2 IDENTITY -->
+<section class="scene s2" id="s2">
+  <div class="s2-name" data-reveal="up" style="--d:0.1s">Gopal Somani<br><span style="color:var(--green);font-style:italic;">CA &middot; PMP&reg;</span></div>
+  <p class="s2-descriptor" data-reveal="up" style="--d:0.3s">
+    <strong>Finance transformation leader and trusted CFO advisor</strong> with 15 years of building the systems, processes and operating models that global enterprises run their finances on. Deep in Oracle Fusion Cloud. Fluent in the language of the CFO. Experienced across four continents and the full arc of transformation — from strategy through go-live and beyond.
+  </p>
+  <div class="s2-anchors">
+    <div class="s2-anchor" data-reveal="up" style="--d:0.45s">
+      <div class="an-num">15<span style="font-size:0.48em;color:var(--mute);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;">yrs</span></div>
+      <div class="an-label">Finance &amp;<br>transformation</div>
+    </div>
+    <div class="s2-anchor" data-reveal="up" style="--d:0.58s">
+      <div class="an-num">30<span style="font-size:0.48em;color:var(--mute);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;">+</span></div>
+      <div class="an-label">Oracle Cloud<br>programmes</div>
+    </div>
+    <div class="s2-anchor" data-reveal="up" style="--d:0.71s">
+      <div class="an-num">15<span style="font-size:0.48em;color:var(--mute);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;">+</span></div>
+      <div class="an-label">Countries,<br>APAC &amp; beyond</div>
+    </div>
+    <div class="s2-anchor" data-reveal="up" style="--d:0.84s">
+      <div class="an-num">40<span style="font-size:0.48em;color:var(--mute);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;">+</span></div>
+      <div class="an-label">Legal entities<br>transformed</div>
+    </div>
+  </div>
+</section>
+
+<!-- S3 THE CRAFT -->
+<section class="scene s3" id="s3">
+  <div class="s3-label" data-reveal="fade" style="--d:0.05s">What he actually does</div>
+  <h2 class="s3-head" data-reveal="up" style="--d:0.15s">Built from two disciplines most transformation leaders only have one of.</h2>
+  <div class="craft-grid">
+    <div class="craft-cell" data-reveal="up" style="--d:0.35s">
+      <div class="cc-verb">Redesigns</div>
+      <div class="cc-body">Finance operating models from the ground up — R2R, P2P, O2C and FP&amp;A processes rebuilt around Fusion Cloud capabilities, not legacy habits.</div>
+    </div>
+    <div class="craft-cell" data-reveal="up" style="--d:0.45s">
+      <div class="cc-verb">Architects</div>
+      <div class="cc-body">Oracle Fusion Cloud ERP programmes across the full lifecycle — from chart-of-accounts design through functional build, go-live and hypercare.</div>
+    </div>
+    <div class="craft-cell" data-reveal="up" style="--d:0.55s">
+      <div class="cc-verb">Advises</div>
+      <div class="cc-body">CFOs and Group Finance leadership directly — translating technology options into finance strategy decisions, and investment cases into C-suite language.</div>
+    </div>
+    <div class="craft-cell" data-reveal="up" style="--d:0.65s">
+      <div class="cc-verb">Leads</div>
+      <div class="cc-body">Regional teams and vendor ecosystems across complex, multi-country programmes — delivery governance, mentoring and stakeholder management as core disciplines.</div>
+    </div>
+  </div>
+  <div class="process-row" data-reveal="fade" style="--d:0.8s">
+    <div class="ptag">Record-to-Report</div>
+    <div class="ptag">Procure-to-Pay</div>
+    <div class="ptag">Order-to-Cash</div>
+    <div class="ptag">FP&amp;A</div>
+    <div class="ptag">Consolidations &amp; Close</div>
+    <div class="ptag">GenAI Finance</div>
+    <div class="ptag">Shared Services Design</div>
+  </div>
+</section>
+
+<!-- S4 PROOF -->
+<section class="scene s4" id="s4">
+  <div class="s4-label" data-reveal="fade" style="--d:0.05s">Delivery record</div>
+  <h2 class="s4-head" data-reveal="up" style="--d:0.15s">Numbers from programmes he ran — not teams he managed.</h2>
+  <div class="proof-row">
+    <div class="proof-cell" data-reveal="up" style="--d:0.35s">
+      <div class="pc-num">&minus;20<span class="pc-unit">%</span></div>
+      <div class="pc-label">Month-end close reduction via R2R re-engineering and Fusion Cloud automation</div>
+    </div>
+    <div class="proof-cell" data-reveal="up" style="--d:0.48s">
+      <div class="pc-num">&minus;30<span class="pc-unit">%</span></div>
+      <div class="pc-label">Manual processing effort removed through workflow automation and straight-through payment processing</div>
+    </div>
+    <div class="proof-cell" data-reveal="up" style="--d:0.61s">
+      <div class="pc-num">30<span class="pc-unit">+</span></div>
+      <div class="pc-label">Legacy systems consolidated into unified Oracle Fusion Cloud instances</div>
+    </div>
+    <div class="proof-cell" data-reveal="up" style="--d:0.74s">
+      <div class="pc-num" style="font-size:clamp(18px,2.8vw,30px);padding-top:8px;line-height:1.2;">On&#8209;time</div>
+      <div class="pc-label">Go-live record across 30+ programmes in 15+ countries — no critical overruns</div>
+    </div>
+  </div>
+  <p class="s4-narrative" data-reveal="up" style="--d:0.9s">
+    <strong>"The programmes that work are the ones where someone understands both the finance logic and the system design."</strong> Not a framework. Fifteen years of delivery experience.
+  </p>
+</section>
+
+<!-- S5 PERSPECTIVE -->
+<section class="scene s5" id="s5">
+  <div class="s5-label" data-reveal="fade" style="--d:0.05s">Point of view</div>
+  <h2 class="s5-head" data-reveal="up" style="--d:0.15s">Where finance transformation is heading — and what it takes to lead it.</h2>
+  <div class="pov-list">
+    <div class="pov-item" data-reveal="up" style="--d:0.35s">
+      <div class="pi-mark">01</div>
+      <div class="pi-text">
+        <strong>GenAI doesn't replace the finance function — it exposes every inefficiency in it</strong>
+        Organisations rushing to layer AI onto broken processes will accelerate their problems. The ones that win are those that clean up R2R, P2P and O2C foundations first — then build AI-ready architecture on top. That sequencing is the real transformation mandate for the next five years.
+      </div>
+    </div>
+    <div class="pov-item" data-reveal="up" style="--d:0.5s">
+      <div class="pi-mark">02</div>
+      <div class="pi-text">
+        <strong>The CFO&ndash;CIO gap is where most ERP programmes die</strong>
+        Technology teams design for system capability. Finance teams protect legacy process. Neither speaks the other's language well enough. The programmes that succeed have someone who can translate &mdash; not just manage &mdash; between both sides. That is a rare skill, and it is not taught in either discipline.
+      </div>
+    </div>
+    <div class="pov-item" data-reveal="up" style="--d:0.65s">
+      <div class="pi-mark">03</div>
+      <div class="pi-text">
+        <strong>Multi-country transformation is a people problem disguised as a systems problem</strong>
+        Across APAC — 15+ countries, divergent regulatory environments, different finance maturity levels — the technology is the easy part. Getting local teams, regional leadership and global governance aligned on a single operating model is where the real work happens.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S6 JOURNEY -->
+<section class="scene s6" id="s6">
+  <div class="s6-label" data-reveal="fade" style="--d:0.05s">The career arc</div>
+  <h2 class="s6-head" data-reveal="up" style="--d:0.15s">From articleship to architecture. Every step deliberate.</h2>
+  <div class="timeline" data-reveal="fade" style="--d:0.35s">
+    <div class="tl-item">
+      <div class="tl-year">2008</div>
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-role">Article Assistant &mdash; Statutory &amp; Tax Audit</div>
+        <div class="tl-org">CA Firm &middot; Rajasthan, India</div>
+        <div class="tl-desc">Bank statutory audits, tax and VAT audits across manufacturing, trading and service organisations. The finance fundamentals that make everything else credible.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2012</div>
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-role">Senior Associate Consultant &mdash; Oracle Financials</div>
+        <div class="tl-org">Infosys &middot; Hyderabad</div>
+        <div class="tl-desc">First large-scale ERP exposure — requirements gathering, fit-gap analysis, GL, AP and FA design. Where the CA qualification met enterprise systems for the first time.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2014</div>
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-role">Oracle Functional Consultant</div>
+        <div class="tl-org">Amazon &middot; Global</div>
+        <div class="tl-desc">Worldwide support for Payments, AP, Purchasing and Fixed Assets across Oracle EBS. First exposure to global finance operations at genuine enterprise scale.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2015</div>
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-role">Senior Applications Consultant &mdash; ERP &amp; EPM</div>
+        <div class="tl-org">Oracle India &middot; Hyderabad</div>
+        <div class="tl-desc">3 years inside Oracle's global sales engineering team — product depth, demo architecture and validation of Fusion Cloud capabilities across multiple industries and geographies.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2018</div>
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-role">Fusion Cloud Functional Lead &amp; Senior Consultant</div>
+        <div class="tl-org">Rolta &middot; Inspirage &middot; Multi-country</div>
+        <div class="tl-desc">Full lifecycle Fusion Cloud implementations for global clients across the US, Europe and APAC — semiconductor, manufacturing, logistics. First multi-country delivery leadership.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2020</div>
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-role">Cloud Financial Consultant &rarr; Cloud Transformation Lead &rarr; Regional Enterprise Systems Manager</div>
+        <div class="tl-org">Global Enterprise &middot; APAC &amp; Oceania</div>
+        <div class="tl-desc">A deliberate six-year progression — from hands-on Fusion Cloud SME to regional transformation lead, now owning strategy, governance and delivery across 40+ legal entities in 10+ countries.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2025</div>
+      <div class="tl-dot" style="background:var(--green);border-color:var(--green);"></div>
+      <div class="tl-body">
+        <div class="tl-role">Accelerated Management Programme</div>
+        <div class="tl-org">National University of Singapore</div>
+        <div class="tl-desc">Currently enrolled. Sharpening the strategic leadership edge alongside the delivery record.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S7 CLOSE -->
+<section class="scene s7" id="s7">
+  <div class="s7-label" data-reveal="fade" style="--d:0.05s">Singapore &middot; APAC &middot; Global</div>
+  <div class="s7-sign" data-reveal="up" style="--d:0.15s">Gopal<br>Somani.</div>
+  <p class="s7-closing" data-reveal="up" style="--d:0.35s">
+    Finance transformation leader. Trusted CFO advisor. Oracle Fusion Cloud architect. 15 years making the <em>systems and the strategy</em> speak the same language — across global enterprises, complex multi-country environments and the full arc of digital finance.
+  </p>
+  <div class="s7-tags" data-reveal="fade" style="--d:0.55s">
+    <div class="s7-tag">Oracle Fusion Cloud</div>
+    <div class="s7-tag">CFO Advisory</div>
+    <div class="s7-tag">Finance Operating Model</div>
+    <div class="s7-tag">GenAI Finance</div>
+    <div class="s7-tag">APAC Transformation</div>
+    <div class="s7-tag">CA &middot; PMP&reg;</div>
+  </div>
+  <div class="s7-rule" data-reveal="fade" style="--d:0.7s"></div>
+  <div class="nus-line" data-reveal="fade" style="--d:0.8s">
+    <span>Currently enrolled</span>NUS Accelerated Management Programme &mdash; National University of Singapore, 2025&ndash;26
+  </div>
+  <div class="s7-links" data-reveal="up" style="--d:0.9s">
+    <a class="s7-btn primary" href="https://www.linkedin.com/in/cagopalsomani2091991/" target="_blank" rel="noopener">LinkedIn profile</a>
+    <a class="s7-btn ghost" href="https://www.youtube.com/channel/UCJ3kfF_y1TWkfomAJvjWjTw" target="_blank" rel="noopener">YouTube channel</a>
+  </div>
+</section>
+
+</div>
+
+<script>
+// Word-by-word conviction reveal
+const sentence = "Most finance transformations stall — not because of the technology, but because nobody in the room speaks both finance and systems fluently.";
+const hlWords = new Set(["finance","systems","technology","fluently."]);
+const container = document.getElementById('conviction');
+const words = sentence.split(' ');
+words.forEach((word,i)=>{
+  const s = document.createElement('span');
+  s.className='word';
+  const clean = word.toLowerCase().replace(/[,\.—]/g,'');
+  if(hlWords.has(clean)||hlWords.has(word.toLowerCase())) s.classList.add('hl');
+  s.textContent = word;
+  s.style.animationDelay=(0.35+i*0.085)+'s';
+  container.appendChild(s);
+  // Insert a real space text node between words
+  if(i < words.length - 1) container.appendChild(document.createTextNode(' '));
+});
+
+// Scroll reveals
+const ro = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
+},{threshold:0.15});
+document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
+
+// Progress rail
+const scenes = document.querySelectorAll('.scene');
+const dots = document.querySelectorAll('.rail-dot');
+dots.forEach(d=>{
+  d.addEventListener('click',()=>scenes[+d.dataset.i]?.scrollIntoView({behavior:'smooth'}));
+});
+const no = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const idx=[...scenes].indexOf(e.target);
+      dots.forEach(d=>d.classList.remove('on'));
+      dots[idx]?.classList.add('on');
+    }
+  });
+},{threshold:0.5});
+scenes.forEach(s=>no.observe(s));
+</script>
+</body>
+</html>
